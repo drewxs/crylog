@@ -46,21 +46,25 @@ contract Blog {
     _postIds.increment();
     uint postId = _postIds.current();
     Post storage post = idToPost[postId];
+
     post.id = postId;
     post.title = title;
     post.published = true;
     post.content = hash;
     hashToPost[hash] = post;
+
     emit PostCreated(postId, title, hash);
   }
 
   function updatePost(uint postId, string memory title, string memory hash, bool published) public onlyOwner {
     Post storage post = idToPost[postId];
+    
     post.title = title;
     post.published = published;
     post.content = hash;
     idToPost[postId] = post;
     hashToPost[hash] = post;
+
     emit PostUpdated(postId, title, hash, published);
   }
 
@@ -73,6 +77,7 @@ contract Blog {
       Post storage currentItem = idToPost[currentId];
       posts[i] = currentItem;
     }
+
     return posts;
   }
 
