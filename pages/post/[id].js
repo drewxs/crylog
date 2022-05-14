@@ -41,8 +41,9 @@ export default ({ post }) => {
 	);
 };
 
-export async function getStaticPaths() {
+export const getStaticPaths = async () => {
 	let provider;
+
 	if (process.env.ENVIRONMENT === 'local') {
 		provider = new ethers.providers.JsonRpcProvider();
 	} else if (process.env.ENVIRONMENT === 'testnet') {
@@ -53,14 +54,13 @@ export async function getStaticPaths() {
 
 	const contract = new ethers.Contract(contractAddress, Blog.abi, provider);
 	const data = await contract.fetchPosts();
-
 	const paths = data.map((d) => ({ params: { id: d[2] } }));
 
 	return {
 		paths,
 		fallback: true,
 	};
-}
+};
 
 export const getStaticProps = async ({ params }) => {
 	const { id } = params;
