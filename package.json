@@ -16,9 +16,10 @@
     "start": "next start",
     "build": "next build",
     "lint": "next lint",
-    "deploy-local": "npx hardhat run scripts/deploy.js --network localhost",
     "pretty": "prettier --write \"**/*.{js,jsx,json,md,scss}\"",
-    "release": "standard-version"
+    "release": "standard-version",
+    "deploy-local": "npx hardhat run scripts/deploy.js --network localhost",
+    "deploy-testnet": "npx hardhat run scripts/deploy.js --network mumbai"
   },
   "lint-staged": {
     "*.js,*.jsx,*.json,*.md,*.scss": [
@@ -51,6 +52,7 @@
     "web3modal": "^1.9.7"
   },
   "devDependencies": {
+    "dotenv": "^16.0.1",
     "eslint": "8.14.0",
     "eslint-config-next": "12.1.5",
     "husky": "^8.0.1",
