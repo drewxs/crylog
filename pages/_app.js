@@ -10,7 +10,7 @@ import '../styles/globals.css';
 import { AccountContext } from '../context.js';
 import { ownerAddress } from '../config';
 
-export default ({ Component, pageProps }) => {
+const App = ({ Component, pageProps }) => {
   const [account, setAccount] = useState(null);
 
   const getWeb3Modal = async () => {
@@ -90,6 +90,8 @@ export default ({ Component, pageProps }) => {
     </div>
   );
 };
+
+export default App;
 
 const accountInfo = css`
   width: 100%;
