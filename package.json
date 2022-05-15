@@ -1,14 +1,24 @@
 {
-  "name": "eth-cms",
+  "name": "crylog",
   "version": "0.1.0",
-  "private": true,
+  "description": "Decentralized content management",
+  "keywords": [
+    "conventional-changelog"
+  ],
+  "author": "Andrew X. Shah <https://github.com/kito0>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kito0/crylog/issues"
+  },
+  "homepage": "https://github.com/kito0/crylog",
   "scripts": {
     "dev": "next dev",
     "start": "next start",
     "build": "next build",
     "lint": "next lint",
     "deploy-local": "npx hardhat run scripts/deploy.js --network localhost",
-    "pretty": "prettier --write \"**/*.{js,jsx,json,md,scss}\""
+    "pretty": "prettier --write \"**/*.{js,jsx,json,md,scss}\"",
+    "release": "standard-version"
   },
   "lint-staged": {
     "*.js,*.jsx,*.json,*.md,*.scss": [
@@ -43,6 +53,7 @@
   "devDependencies": {
     "eslint": "8.14.0",
     "eslint-config-next": "12.1.5",
-    "husky": "^8.0.1"
+    "husky": "^8.0.1",
+    "standard-version": "^9.3.2"
   }
 }
