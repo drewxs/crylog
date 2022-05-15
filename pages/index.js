@@ -11,11 +11,7 @@ import Blog from '../artifacts/contracts/Blog.sol/Blog.json';
 const Home = (props) => {
   const { posts } = props;
   const account = useContext(AccountContext);
-
   const router = useRouter();
-  const navigate = async () => {
-    router.push('/create-post');
-  };
 
   return (
     <div>
@@ -41,7 +37,10 @@ const Home = (props) => {
       </div>
       <div className={container}>
         {account === ownerAddress && posts && !posts.length && (
-          <button className={buttonStyle} onClick={navigate}>
+          <button
+            className={buttonStyle}
+            onClick={async () => router.push('/create-post')}
+          >
             Create your first post
             <div className='img-container' style={{ marginLeft: 35 }}>
               <Image
