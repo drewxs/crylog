@@ -31,7 +31,7 @@ $ yarn install
 Run the local node:
 
 ```shell
-$ npx hardhat node
+$ yarn node-local
 ```
 
 Deploy the local node to the local network:
