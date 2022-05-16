@@ -1,0 +1,19 @@
+# dependencies
+node_modules
+.pnp
+.pnp.js
+
+# testing
+coverage
+coverage.json
+
+# next.js
+.next/
+out/
+
+# production
+build
+
+# hardhat
+cache
+artifacts
