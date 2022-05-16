@@ -1,61 +1,55 @@
 {
-	"name": "crylog",
-	"version": "0.1.1-0",
-	"description": "Decentralized content management",
-	"keywords": [
-		"conventional-changelog"
-	],
-	"author": "Andrew X. Shah <https://github.com/kito0>",
-	"license": "MIT",
-	"bugs": {
-		"url": "https://github.com/kito0/crylog/issues"
-	},
-	"homepage": "https://github.com/kito0/crylog",
-	"scripts": {
-		"dev": "next dev",
-		"start": "next start",
-		"build": "next build",
-		"lint": "next lint",
-		"pretty": "prettier --write \"**/*.{js,jsx,json,md,scss}\"",
-		"release": "standard-version",
-		"deploy-local": "npx hardhat run scripts/deploy.js --network localhost",
-		"deploy-testnet": "npx hardhat run scripts/deploy.js --network mumbai"
-	},
-	"lint-staged": {
-		"*.js,*.jsx,*.json,*.md,*.scss": [
-			"npm run pretty",
-			"git add"
-		]
-	},
-	"husky": {
-		"hooks": {
-			"pre-commit": "lint-staged"
-		}
-	},
-	"dependencies": {
-		"@emotion/css": "^11.9.0",
-		"@nomiclabs/hardhat-ethers": "^2.0.5",
-		"@nomiclabs/hardhat-waffle": "^2.0.3",
-		"@openzeppelin/contracts": "^4.6.0",
-		"@walletconnect/web3-provider": "^1.7.8",
-		"chai": "^4.3.6",
-		"easymde": "^2.16.1",
-		"ethereum-waffle": "^3.4.4",
-		"ethers": "^5.6.4",
-		"hardhat": "^2.9.3",
-		"ipfs-http-client": "^56.0.3",
-		"next": "12.1.5",
-		"react": "18.1.0",
-		"react-dom": "18.1.0",
-		"react-markdown": "^8.0.3",
-		"react-simplemde-editor": "^5.0.2",
-		"web3modal": "^1.9.7"
-	},
-	"devDependencies": {
-		"dotenv": "^16.0.1",
-		"eslint": "8.14.0",
-		"eslint-config-next": "12.1.5",
-		"husky": "^8.0.1",
-		"standard-version": "^9.3.2"
-	}
+  "name": "crylog",
+  "version": "0.1.1-0",
+  "description": "Decentralized content management",
+  "keywords": [
+    "conventional-changelog"
+  ],
+  "author": "Andrew X. Shah <https://github.com/kito0>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kito0/crylog/issues"
+  },
+  "homepage": "https://github.com/kito0/crylog",
+  "scripts": {
+    "dev": "next dev",
+    "start": "next start",
+    "build": "next build",
+    "lint": "next lint",
+    "lint:fix": "next lint --fix",
+    "format": "prettier --write \"**/*.{js,jsx,json,md,scss}\"",
+    "release": "standard-version",
+    "deploy-local": "npx hardhat run scripts/deploy.js --network localhost",
+    "deploy-testnet": "npx hardhat run scripts/deploy.js --network mumbai",
+    "prepare": "husky install"
+  },
+  "dependencies": {
+    "@emotion/css": "^11.9.0",
+    "@nomiclabs/hardhat-ethers": "^2.0.5",
+    "@nomiclabs/hardhat-waffle": "^2.0.3",
+    "@openzeppelin/contracts": "^4.6.0",
+    "@walletconnect/web3-provider": "^1.7.8",
+    "chai": "^4.3.6",
+    "easymde": "^2.16.1",
+    "ethereum-waffle": "^3.4.4",
+    "ethers": "^5.6.4",
+    "hardhat": "^2.9.3",
+    "ipfs-http-client": "^56.0.3",
+    "next": "12.1.5",
+    "react": "18.1.0",
+    "react-dom": "18.1.0",
+    "react-markdown": "^8.0.3",
+    "react-simplemde-editor": "^5.0.2",
+    "web3modal": "^1.9.7"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.1",
+    "eslint": "8.14.0",
+    "eslint-config-next": "12.1.5",
+    "eslint-config-prettier": "^8.5.0",
+    "husky": "^8.0.1",
+    "lint-staged": "^12.4.1",
+    "prettier": "^2.6.2",
+    "standard-version": "^9.3.2"
+  }
 }
