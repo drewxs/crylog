@@ -8,9 +8,9 @@ import { AccountContext } from '../context';
 import { contractAddress, ownerAddress } from '../config';
 import Blog from '../artifacts/contracts/Blog.sol/Blog.json';
 
-const Home = (props) => {
+const Home = (props: { posts: [] }) => {
   const { posts } = props;
-  const account = useContext(AccountContext);
+  const { account } = useContext(AccountContext);
   const router = useRouter();
 
   return (

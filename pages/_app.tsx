@@ -7,11 +7,12 @@ import Web3Modal from 'web3modal';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import 'easymde/dist/easymde.min.css';
 import '../styles/globals.css';
-import { AccountContext } from '../context.js';
+import { AccountContext } from '../context';
 import { ownerAddress } from '../config';
+import type { AppProps } from 'next/app';
 
-const App = ({ Component, pageProps }) => {
-  const [account, setAccount] = useState(null);
+const App = ({ Component, pageProps }: AppProps) => {
+  const [account, setAccount] = useState<string>('');
 
   const getWeb3Modal = async () => {
     const web3Modal = new Web3Modal({
@@ -83,7 +84,7 @@ const App = ({ Component, pageProps }) => {
         </div>
       </nav>
       <div className={container}>
-        <AccountContext.Provider value={account}>
+        <AccountContext.Provider value={{ account }}>
           <Component {...pageProps} connect={connect} />
         </AccountContext.Provider>
       </div>

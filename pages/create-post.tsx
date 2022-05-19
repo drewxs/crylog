@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
@@ -8,20 +8,22 @@ import { create } from 'ipfs-http-client';
 import { contractAddress } from '../config';
 import Blog from '../artifacts/contracts/Blog.sol/Blog.json';
 
-const client = create('https://ipfs.infura.io:5001/api/v0');
+const client = create({
+  host: 'ipfs.infura.io',
+  port: 5001,
+  protocol: 'https',
+});
 
 const SimpleMDE = dynamic(() => import('react-simplemde-editor'), {
   ssr: false,
 });
 
-const initialState = { title: '', content: '' };
-
 const CreatePost = () => {
-  const [post, setPost] = useState(initialState);
-  const [image, setImage] = useState(null);
-  const [loaded, setLoaded] = useState(false);
+  const [post, setPost] = useState({ title: '', content: '' });
+  const [image, setImage] = useState<File>();
+  const [loaded, setLoaded] = useState<Boolean>(false);
 
-  const fileRef = useRef(null);
+  const fileRef = useRef<HTMLInputElement>(null);
   const { title, content } = post;
   const router = useRouter();
 
@@ -31,14 +33,14 @@ const CreatePost = () => {
     }, 500);
   }, []);
 
-  const onChange = (e) => {
+  const onChange = (e: { target: { name: string; value: string } }) => {
     setPost(() => ({ ...post, [e.target.name]: e.target.value }));
   };
 
   const createNewPost = async () => {
     if (!title || !content) return;
     const hash = await savePostToIpfs();
-    await savePost(hash);
+    if (hash) await savePost(hash);
     router.push(`/`);
   };
 
@@ -51,7 +53,7 @@ const CreatePost = () => {
     }
   };
 
-  const savePost = async (hash) => {
+  const savePost = async (hash: string) => {
     if (typeof window.ethereum !== 'undefined') {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
@@ -71,12 +73,12 @@ const CreatePost = () => {
   };
 
   const triggerOnChange = () => {
-    fileRef.current.click();
+    fileRef.current?.click();
   };
 
-  const handleFileChange = async (e) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return;
     const uploadedFile = e.target.files[0];
-    if (!uploadedFile) return;
     const added = await client.add(uploadedFile);
     setPost((state) => ({ ...state, coverImage: added.path }));
     setImage(uploadedFile);

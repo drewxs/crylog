@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -8,13 +9,16 @@ import { ethers } from 'ethers';
 import { AccountContext } from '../../context';
 import { contractAddress, ownerAddress } from '../../config';
 import Blog from '../../artifacts/contracts/Blog.sol/Blog.json';
+import { IPost } from '../../types';
 
 const ipfsURI = 'https://ipfs.io/ipfs/';
 
-const Post = ({ post }) => {
-  const account = useContext(AccountContext);
+const Post = (props: { post: IPost }) => {
+  const { account } = useContext(AccountContext);
   const router = useRouter();
   const { id } = router.query;
+  const { post } = props;
+  const { title, content, coverImage } = props.post;
 
   if (router.isFallback) {
     return <div>Loading...</div>;
@@ -31,11 +35,11 @@ const Post = ({ post }) => {
               </Link>
             </div>
           )}
-          {post.coverImage && (
+          {coverImage && (
             <div>
               <Image
-                src={post.coverImage}
-                alt={post.title}
+                src={coverImage}
+                alt={title}
                 className={coverImageStyle}
                 layout='responsive'
                 objectFit='cover'
@@ -44,9 +48,9 @@ const Post = ({ post }) => {
               />
             </div>
           )}
-          <h1>{post.title}</h1>
+          <h1>{title}</h1>
           <div className={contentContainer}>
-            <ReactMarkdown>{post.content}</ReactMarkdown>
+            <ReactMarkdown>{content}</ReactMarkdown>
           </div>
         </div>
       )}
@@ -71,7 +75,7 @@ export const getStaticPaths = async () => {
 
   const contract = new ethers.Contract(contractAddress, Blog.abi, provider);
   const data = await contract.fetchPosts();
-  const paths = data.map((d) => ({ params: { id: d[2] } }));
+  const paths = data.map((d: string[]) => ({ params: { id: d[2] } }));
 
   return {
     paths,
@@ -79,22 +83,25 @@ export const getStaticPaths = async () => {
   };
 };
 
-export const getStaticProps = async ({ params }) => {
-  const { id } = params;
-  const ipfsUrl = `${ipfsURI}/${id}`;
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  if (!params) return { notFound: true };
+  const { id } = params as IPost;
+
+  const ipfsUrl = `${ipfsURI}/${encodeURI(id)}`;
   const response = await fetch(ipfsUrl);
-  const data = await response.json();
 
-  if (data.coverImage) {
-    let coverImage = `${ipfsURI}/${data.coverImage}`;
-    data.coverImage = coverImage;
+  try {
+    const post = await response.json();
+
+    if (post.coverImage) {
+      let coverImage = `${ipfsURI}/${post.coverImage}`;
+      post.coverImage = coverImage;
+    }
+
+    return { props: { post } };
+  } catch (err) {
+    return { notFound: true };
   }
-
-  return {
-    props: {
-      post: data,
-    },
-  };
 };
 
 const editPost = css`
