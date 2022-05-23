@@ -1,7 +1,10 @@
-require('@nomiclabs/hardhat-waffle');
-require('dotenv').config({ path: './.env.local' });
+import '@nomiclabs/hardhat-waffle';
+import { HardhatUserConfig } from 'hardhat/config';
+import dotenv from 'dotenv';
 
-module.exports = {
+dotenv.config({ path: './.env.local' });
+
+const config: HardhatUserConfig = {
   solidity: '0.8.4',
   networks: {
     hardhat: {
@@ -9,7 +12,7 @@ module.exports = {
     },
     mumbai: {
       url: 'https://rpc-mumbai.matic.today',
-      accounts: [process.env.ACCOUNT_PRIVATE_KEY],
+      accounts: [process.env.ACCOUNT_PRIVATE_KEY ?? ''],
     },
     // polygon: {
     //   url: 'https://polygon-rpc.com/',
@@ -17,3 +20,5 @@ module.exports = {
     // },
   },
 };
+
+export default config;
