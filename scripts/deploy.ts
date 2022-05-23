@@ -1,16 +1,17 @@
-const hre = require('hardhat');
-const fs = require('fs');
+import hre from 'hardhat';
+import fs from 'fs';
 
 const main = async () => {
   const Blog = await hre.ethers.getContractFactory('Blog');
   const blog = await Blog.deploy('Test blog');
+  const address = await blog.signer.getAddress();
 
   await blog.deployed();
   console.log(`Blog deployed to: ${blog.address}`);
 
   fs.writeFileSync(
-    './config.js',
-    `export const contractAddress = "${blog.address}";\nexport const ownerAddress = "${blog.signer.address}";`
+    './config.ts',
+    `export const contractAddress: string = "${blog.address}";\nexport const ownerAddress: string = "${address}";`
   );
 };
 
@@ -20,3 +21,5 @@ main()
     console.error(err);
     process.exit(1);
   });
+
+export default main;
