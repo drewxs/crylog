@@ -1,10 +1,20 @@
-/** @type {import('next').NextConfig} */
+/**
+ * @type {import('next').NextConfig}
+ */
 module.exports = {
-  reactStrictMode: false,
+  reactStrictMode: true,
   images: {
     domains: ['ipfs.io'],
   },
   eslint: {
-    dirs: ['pages', 'components', 'scripts', 'styles', 'test', 'contracts'],
+    dirs: [
+      'contracts',
+      'pages',
+      'components',
+      'scripts',
+      'styles',
+      '__tests__',
+      'types',
+    ],
   },
 };
