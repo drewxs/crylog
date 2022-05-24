@@ -94,7 +94,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     const post = await response.json();
 
     if (post.coverImage) {
-      let coverImage = `${ipfsURI}/${post.coverImage}`;
+      const coverImage = `${ipfsURI}/${post.coverImage}`;
       post.coverImage = coverImage;
     }
 
