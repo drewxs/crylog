@@ -1,7 +1,7 @@
-const { expect } = require('chai');
-const { ethers } = require('hardhat');
+import { expect } from 'chai';
+import { ethers } from 'hardhat';
 
-describe('Blog', function () {
+describe('Blog', () => {
   it('Should create a post', async () => {
     const Blog = await ethers.getContractFactory('Blog');
     const blog = await Blog.deploy('Test blog');
@@ -20,7 +20,7 @@ describe('Blog', function () {
     await blog.createPost('Test post', 'Test content');
     await blog.updatePost(1, 'Updated post', 'Updated content', true);
 
-    posts = await blog.fetchPosts();
+    const posts = await blog.fetchPosts();
     expect(posts[0].title).to.equal('Updated post');
   });
 
