@@ -21,7 +21,7 @@ const SimpleMDE = dynamic(() => import('react-simplemde-editor'), {
 const CreatePost = () => {
   const [post, setPost] = useState({ title: '', content: '' });
   const [image, setImage] = useState<File>();
-  const [loaded, setLoaded] = useState<Boolean>(false);
+  const [loaded, setLoaded] = useState<boolean>(false);
 
   const fileRef = useRef<HTMLInputElement>(null);
   const { title, content } = post;
