@@ -1,12 +1,13 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { useRouter } from 'next/router';
-import Image from 'next/image';
-import dynamic from 'next/dynamic';
 import { css } from '@emotion/css';
 import { ethers } from 'ethers';
 import { create } from 'ipfs-http-client';
-import { contractAddress } from '../config';
-import Blog from '../artifacts/contracts/Blog.sol/Blog.json';
+import dynamic from 'next/dynamic';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+import React, { useEffect, useRef, useState } from 'react';
+
+import Blog from 'artifacts/contracts/Blog.sol/Blog.json';
+import { contractAddress } from 'config';
 
 const client = create({
   host: 'ipfs.infura.io',

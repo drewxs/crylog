@@ -1,5 +1,5 @@
-import hre from 'hardhat';
 import fs from 'fs';
+import hre from 'hardhat';
 
 const main = async () => {
   const Blog = await hre.ethers.getContractFactory('Blog');

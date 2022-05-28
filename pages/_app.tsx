@@ -1,15 +1,16 @@
-import { useState } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
 import { css } from '@emotion/css';
-import { ethers } from 'ethers';
-import Web3Modal from 'web3modal';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import 'easymde/dist/easymde.min.css';
-import '../styles/globals.css';
-import { AccountContext } from '../context';
-import { ownerAddress } from '../config';
+import { ethers } from 'ethers';
 import type { AppProps } from 'next/app';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useState } from 'react';
+import 'styles/globals.css';
+import Web3Modal from 'web3modal';
+
+import { ownerAddress } from 'config';
+import { AccountContext } from 'context';
 
 const App = ({ Component, pageProps }: AppProps) => {
   const [account, setAccount] = useState<string>('');
