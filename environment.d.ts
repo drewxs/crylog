@@ -4,6 +4,7 @@ declare global {
       env: {
         [key: string]: string;
       };
+      exit: (type: number) => void;
     }
   }
 }
