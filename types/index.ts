@@ -1,6 +1,4 @@
-import { ParsedUrlQuery } from 'querystring';
-
-export interface IPost extends ParsedUrlQuery {
+export interface IPost {
   id: string;
   title: string;
   content: string;
