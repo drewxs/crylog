@@ -11,7 +11,7 @@ const main = async () => {
 
   fs.writeFileSync(
     './config.ts',
-    `export const contractAddress: string = "${blog.address}";\nexport const ownerAddress: string = "${address}";`
+    `export const contractAddress = '${blog.address}';\nexport const ownerAddress = '${address}';`
   );
 };
 
