@@ -8,7 +8,10 @@
   "tabWidth": 2,
   "trailingComma": "es5",
   "useTabs": false,
-  "importOrder": ["^components/(.*)$", "^[./]"],
+  "importOrder": [
+    "^(^artifacts/(.*)|contracts/components|pages|scripts|types|config|context)$",
+    "^[./]"
+  ],
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true
 }
