@@ -6,7 +6,9 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import Blog from 'artifacts/contracts/Blog.sol/Blog.json';
 import { contractAddress } from 'config';
-import { MDE, client } from 'utils';
+import { getWeb3Provider } from 'utils/ethers-util';
+import { client, saveToIpfs } from 'utils/ipfs';
+import { MDE } from 'utils/mde';
 
 const CreatePost = () => {
   const [post, setPost] = useState({ title: '', content: '' });
@@ -29,36 +31,31 @@ const CreatePost = () => {
 
   const createNewPost = async () => {
     if (!title || !content) return;
-    const hash = await savePostToIpfs();
+
+    const hash = await saveToIpfs(post);
     if (hash) await savePost(hash);
+
     router.push(`/`);
   };
 
-  const savePostToIpfs = async () => {
+  const savePost = async (hash: string) => {
+    if (typeof window.ethereum === 'undefined') return;
+
+    const web3 = getWeb3Provider();
+    const { provider, signer } = web3;
+    if (!provider || !signer) return;
+
+    const contract = new ethers.Contract(contractAddress, Blog.abi, signer);
+
     try {
-      const added = await client.add(JSON.stringify(post));
-      return added.path;
+      const val = await contract.createPost(post.title, hash);
+
+      // optional - wait for transaction to be confirmed before rerouting
+      await provider.waitForTransaction(val.hash);
+
+      console.log('val: ', val);
     } catch (err) {
       console.log('error: ', err);
-    }
-  };
-
-  const savePost = async (hash: string) => {
-    if (typeof window.ethereum !== 'undefined') {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
-      const contract = new ethers.Contract(contractAddress, Blog.abi, signer);
-      console.log('contract: ', contract);
-      try {
-        const val = await contract.createPost(post.title, hash);
-
-        // optional - wait for transaction to be confirmed before rerouting
-        await provider.waitForTransaction(val.hash);
-
-        console.log('val: ', val);
-      } catch (err) {
-        console.log('error: ', err);
-      }
     }
   };
 
@@ -68,8 +65,10 @@ const CreatePost = () => {
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
+
     const uploadedFile = e.target.files[0];
     const added = await client.add(uploadedFile);
+
     setPost((state) => ({ ...state, coverImage: added.path }));
     setImage(uploadedFile);
   };

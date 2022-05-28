@@ -11,8 +11,8 @@ import Blog from 'artifacts/contracts/Blog.sol/Blog.json';
 import { contractAddress, ownerAddress } from 'config';
 import { AccountContext } from 'context';
 import { IPost } from 'types';
-
-const ipfsURI = 'https://ipfs.io/ipfs/';
+import { getJsonRpcProvider } from 'utils/ethers-util';
+import { fetchIpfsMetadata, getIpfsUrl } from 'utils/ipfs';
 
 const Post = (props: { post: IPost }) => {
   const { account } = useContext(AccountContext);
@@ -62,21 +62,7 @@ const Post = (props: { post: IPost }) => {
 export default Post;
 
 export const getStaticPaths = async () => {
-  let provider;
-  const mumbaiNetwork = 'https://rpc-mumbai.matic.today';
-  const polygonNetwork = 'https://polygon-rpc.com/';
-
-  switch (process.env.ENVIRONMENT) {
-    case 'local':
-      provider = new ethers.providers.JsonRpcProvider();
-      break;
-    case 'testnet':
-      provider = new ethers.providers.JsonRpcProvider(mumbaiNetwork);
-      break;
-    default:
-      provider = new ethers.providers.JsonRpcProvider(polygonNetwork);
-  }
-
+  const provider = getJsonRpcProvider();
   const contract = new ethers.Contract(contractAddress, Blog.abi, provider);
   const data = await contract.fetchPosts();
   const paths = data.map((d: string[]) => ({ params: { id: d[2] } }));
@@ -86,16 +72,14 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   if (!params) return { notFound: true };
-  const { id } = params;
 
-  const ipfsUrl = encodeURI(`${ipfsURI}/${id}`);
-  const response = await fetch(ipfsUrl);
+  const id = String(params.id);
 
   try {
-    const post = await response.json();
+    const post = await fetchIpfsMetadata(id);
 
     if (post.coverImage) {
-      const coverImage = `${ipfsURI}/${post.coverImage}`;
+      const coverImage = getIpfsUrl(post.coverImage);
       post.coverImage = coverImage;
     }
 
