@@ -13,7 +13,7 @@ module.exports = {
       'components',
       'scripts',
       'styles',
-      '__tests__',
+      'tests',
       'types',
     ],
   },
