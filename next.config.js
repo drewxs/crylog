@@ -15,6 +15,7 @@ module.exports = {
       'styles',
       'tests',
       'types',
+      'utils',
     ],
   },
 };

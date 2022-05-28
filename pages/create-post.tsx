@@ -1,23 +1,12 @@
 import { css } from '@emotion/css';
 import { ethers } from 'ethers';
-import { create } from 'ipfs-http-client';
-import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useEffect, useRef, useState } from 'react';
 
 import Blog from 'artifacts/contracts/Blog.sol/Blog.json';
 import { contractAddress } from 'config';
-
-const client = create({
-  host: 'ipfs.infura.io',
-  port: 5001,
-  protocol: 'https',
-});
-
-const SimpleMDE = dynamic(() => import('react-simplemde-editor'), {
-  ssr: false,
-});
+import { MDE, client } from 'utils';
 
 const CreatePost = () => {
   const [post, setPost] = useState({ title: '', content: '' });
@@ -104,7 +93,7 @@ const CreatePost = () => {
         value={post.title}
         className={titleStyle}
       />
-      <SimpleMDE
+      <MDE
         className={mdEditor}
         placeholder="What's on your mind?"
         value={post.content}

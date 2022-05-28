@@ -9,7 +9,7 @@
   "trailingComma": "es5",
   "useTabs": false,
   "importOrder": [
-    "^(^artifacts/(.*)|contracts/components|pages|scripts|types|config|context)$",
+    "^(^artifacts/(.*)|contracts/components|pages|scripts|types|utils|config|context)$",
     "^[./]"
   ],
   "importOrderSeparation": true,
