@@ -44,6 +44,8 @@
     "web3modal": "^1.9.7"
   },
   "devDependencies": {
+    "@swc/core": "^1.2.194",
+    "@swc/helpers": "^0.3.16",
     "@trivago/prettier-plugin-sort-imports": "^3.2.0",
     "@types/chai": "^4.3.1",
     "@types/mocha": "^9.1.1",
@@ -57,6 +59,7 @@
     "husky": "^8.0.1",
     "lint-staged": "^12.4.1",
     "prettier": "^2.6.2",
+    "regenerator-runtime": "^0.13.9",
     "standard-version": "^9.3.2",
     "ts-node": "^10.8.0",
     "typescript": "^4.6.4"
