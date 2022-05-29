@@ -3,7 +3,16 @@
   "version": "0.1.1-0",
   "description": "Decentralized content management",
   "keywords": [
-    "conventional-changelog"
+    "crylog",
+    "decentralized",
+    "cms",
+    "ethereum",
+    "ipfs",
+    "polygon",
+    "hardhat",
+    "the-graph",
+    "nextjs",
+    "react"
   ],
   "author": "Andrew X. Shah <https://github.com/kito0>",
   "license": "MIT",
