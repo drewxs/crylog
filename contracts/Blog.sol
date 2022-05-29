@@ -12,22 +12,22 @@ contract Blog {
   Counters.Counter private _postIds;
 
   struct Post {
-    uint id;
+    uint256 id;
     string title;
     string content;
     bool published;
   }
 
-  mapping(uint => Post) private idToPost;
+  mapping(uint256 => Post) private idToPost;
   mapping(string => Post) private hashToPost;
 
-  event PostCreated(uint id, string title, string hash) ;
-  event PostUpdated(uint id, string title, string hash, bool published);
+  event PostCreated(uint256 id, string title, string hash);
+  event PostUpdated(uint256 id, string title, string hash, bool published);
 
   constructor(string memory _name) {
-     console.log("Deploying a Blog with name:", _name);
-     name = _name;
-     owner = msg.sender;
+    console.log('Deploying a Blog with name:', _name);
+    name = _name;
+    owner = msg.sender;
   }
 
   function updateName(string memory _name) public {
@@ -38,13 +38,20 @@ contract Blog {
     owner = newOwner;
   }
 
-  function fetchPost(string memory hash) public view returns (Post memory post) {
+  function fetchPost(string memory hash)
+    public
+    view
+    returns (Post memory post)
+  {
     post = hashToPost[hash];
   }
 
-  function createPost(string memory title, string memory hash) public onlyOwner {
+  function createPost(string memory title, string memory hash)
+    public
+    onlyOwner
+  {
     _postIds.increment();
-    uint postId = _postIds.current();
+    uint256 postId = _postIds.current();
     Post storage post = idToPost[postId];
 
     post.id = postId;
@@ -56,9 +63,14 @@ contract Blog {
     emit PostCreated(postId, title, hash);
   }
 
-  function updatePost(uint postId, string memory title, string memory hash, bool published) public onlyOwner {
+  function updatePost(
+    uint256 postId,
+    string memory title,
+    string memory hash,
+    bool published
+  ) public onlyOwner {
     Post storage post = idToPost[postId];
-    
+
     post.title = title;
     post.published = published;
     post.content = hash;
@@ -68,12 +80,12 @@ contract Blog {
     emit PostUpdated(postId, title, hash, published);
   }
 
-  function fetchPosts() public view returns(Post[] memory) {
-    uint itemCount = _postIds.current();
+  function fetchPosts() public view returns (Post[] memory) {
+    uint256 itemCount = _postIds.current();
 
     Post[] memory posts = new Post[](itemCount);
-    for(uint i = 0; i < itemCount; i++) {
-      uint currentId = i + 1;
+    for (uint256 i = 0; i < itemCount; i++) {
+      uint256 currentId = i + 1;
       Post storage currentItem = idToPost[currentId];
       posts[i] = currentItem;
     }
@@ -81,7 +93,7 @@ contract Blog {
     return posts;
   }
 
-  modifier onlyOwner {
+  modifier onlyOwner() {
     require(msg.sender == owner);
     _;
   }
