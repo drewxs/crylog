@@ -11,7 +11,6 @@ export const client = create({
 
 export const getIpfsUrl = (hash: string) => {
   const ipfsUrl = `${ipfsURI}/${encodeURI(hash)}`;
-
   return ipfsUrl;
 };
 
@@ -20,7 +19,6 @@ export const fetchIpfsMetadata = async (hash: string) => {
     const ipfsUrl = getIpfsUrl(hash);
     const response = await fetch(ipfsUrl);
     const result = await response.json();
-
     return result;
   } catch (error) {
     console.error(error);
