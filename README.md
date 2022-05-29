@@ -15,7 +15,7 @@ $ npm -v && node -v
 
 ## Configuration
 
-Create a copy of .env.local.example and rename it to .env.local <br>
+Create a copy of .env.example and rename it to .env <br>
 Update the values in .env.local to match your environment.
 
 ## Installation
