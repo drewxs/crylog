@@ -20,12 +20,11 @@ const EditPost = () => {
 
   const updatePost = async () => {
     if (!post) return;
-    const hash = await saveToIpfs(post);
 
+    const hash = await saveToIpfs(post);
     const { provider, signer } = getWeb3Provider();
     if (!provider || !signer) return;
     const contract = new ethers.Contract(contractAddress, Blog.abi, signer);
-
     await contract.updatePost(post.id, post.title, hash, true);
     router.push('/');
   };
@@ -56,7 +55,6 @@ const EditPost = () => {
   }, [id]);
 
   if (!post) return null;
-
   return (
     <div className={container}>
       {editing && (

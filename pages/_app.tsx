@@ -21,9 +21,7 @@ const App = ({ Component, pageProps }: AppProps) => {
       providerOptions: {
         walletconnect: {
           package: WalletConnectProvider,
-          options: {
-            infuraId: 'your-infura-id',
-          },
+          options: { infuraId: 'your-infura-id' },
         },
       },
     });

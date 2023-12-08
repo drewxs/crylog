@@ -21,10 +21,7 @@ const Post = (props: { post: IPost }) => {
   const { post } = props;
   const { title, content, coverImage } = props.post;
 
-  if (router.isFallback) {
-    return <div>Loading...</div>;
-  }
-
+  if (router.isFallback) return <div>Loading...</div>;
   return (
     <div>
       {post && (

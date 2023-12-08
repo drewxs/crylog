@@ -20,9 +20,7 @@ const CreatePost = () => {
   const router = useRouter();
 
   useEffect(() => {
-    setTimeout(() => {
-      setLoaded(true);
-    }, 500);
+    setTimeout(() => setLoaded(true), 500);
   }, []);
 
   const onChange = (e: { target: { name: string; value: string } }) => {
@@ -34,7 +32,6 @@ const CreatePost = () => {
 
     const hash = await saveToIpfs(post);
     if (hash) await savePost(hash);
-
     router.push(`/`);
   };
 
@@ -49,10 +46,7 @@ const CreatePost = () => {
 
     try {
       const val = await contract.createPost(post.title, hash);
-
-      // optional - wait for transaction to be confirmed before rerouting
       await provider.waitForTransaction(val.hash);
-
       console.log('val: ', val);
     } catch (err) {
       console.log('error: ', err);

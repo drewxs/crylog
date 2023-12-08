@@ -1,7 +1,5 @@
 import { create } from 'ipfs-http-client';
 
-const ipfsURI = 'https://ipfs.io/ipfs/';
-
 export const client = create({
   protocol: 'https',
   host: 'ipfs.infura.io',
@@ -9,10 +7,8 @@ export const client = create({
   apiPath: '/api/v0',
 });
 
-export const getIpfsUrl = (hash: string) => {
-  const ipfsUrl = `${ipfsURI}/${encodeURI(hash)}`;
-  return ipfsUrl;
-};
+export const getIpfsUrl = (hash: string) =>
+  `https://ipfs.io/ipfs/${encodeURI(hash)}`;
 
 export const fetchIpfsMetadata = async (hash: string) => {
   try {

@@ -1,13 +1,5 @@
 import { createContext } from 'react';
 
-type accountContextType = {
-  account: string;
-};
-
-const accountContextDefaultValues: accountContextType = {
+export const AccountContext = createContext({
   account: '',
-};
-
-export const AccountContext = createContext<accountContextType>(
-  accountContextDefaultValues
-);
+});
